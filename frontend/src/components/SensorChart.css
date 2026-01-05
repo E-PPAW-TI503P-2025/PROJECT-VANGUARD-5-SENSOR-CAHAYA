@@ -1,0 +1,88 @@
+/* ============ Chart Container ============ */
+.chart-container {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.chart-container h2 {
+  margin: 0 0 20px 0;
+  color: #2c3e50;
+  font-size: 20px;
+}
+
+/* ============ Chart Wrapper ============ */
+.chart-wrapper {
+  margin-bottom: 20px;
+  overflow-x: auto;
+  background: #f9f9f9;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.chart-svg {
+  width: 100%;
+  min-height: 350px;
+  display: block;
+}
+
+/* ============ Chart Bar ============ */
+.chart-bar {
+  transition: fill 0.3s ease;
+  cursor: pointer;
+}
+
+.chart-bar:hover {
+  fill: #388e3c;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.2));
+}
+
+/* ============ Chart Legend ============ */
+.chart-legend {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 15px 0;
+  border-top: 1px solid #eee;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #555;
+  font-size: 14px;
+}
+
+.legend-color {
+  width: 20px;
+  height: 20px;
+  border-radius: 3px;
+  display: inline-block;
+}
+
+/* ============ Responsive Design ============ */
+@media (max-width: 768px) {
+  .chart-container {
+    padding: 15px;
+  }
+
+  .chart-container h2 {
+    font-size: 18px;
+    margin-bottom: 15px;
+  }
+
+  .chart-wrapper {
+    padding: 5px;
+  }
+
+  .chart-svg {
+    min-height: 250px;
+  }
+
+  .legend-item {
+    font-size: 12px;
+  }
+}
