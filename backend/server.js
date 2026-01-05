@@ -9,7 +9,7 @@ const sequelize = require("./config/sequelize");
 const iotRoutes = require("./routes/iot.routes");
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 // ================= MIDDLEWARE =================
 app.use(cors());
