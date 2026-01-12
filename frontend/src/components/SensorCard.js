@@ -24,6 +24,3 @@ function SensorCard({ label, value, unit, icon = '📊', color = 'blue' }) {
 }
 
 export default SensorCard;
-
-
-vbvbvbv

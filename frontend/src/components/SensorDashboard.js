@@ -4,7 +4,7 @@ import SensorCard from './SensorCard';
 import SensorChart from './SensorChart';
 import SensorHistory from './SensorHistory';
 
-function SensorDashboard() {
+function SensorDashboard({ onBackToLanding }) {
   const [latestData, setLatestData] = useState(null);
   const [allData, setAllData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -59,6 +59,14 @@ function SensorDashboard() {
     fetchAllData();
   };
 
+  // Fungsi untuk menentukan status cahaya
+  const getLightStatus = (lux) => {
+    if (lux < 100) return { status: 'Sangat Gelap', color: 'red', icon: '🌑' };
+    if (lux < 500) return { status: 'Gelap', color: 'orange', icon: '🌙' };
+    if (lux < 1000) return { status: 'Terang', color: 'yellow', icon: '☀️' };
+    return { status: 'Sangat Terang', color: 'gold', icon: '🔆' };
+  };
+
   if (loading && !latestData) {
     return (
       <div className="dashboard-container">
@@ -72,6 +80,12 @@ function SensorDashboard() {
       {/* Header */}
       <div className="dashboard-header">
         <div>
+          <button 
+            className="btn btn-back"
+            onClick={onBackToLanding}
+          >
+            ← Kembali ke Beranda
+          </button>
           <h1>📊 Dashboard Monitoring Sensor Cahaya</h1>
           <p>Sistem Real-time Monitoring Intensitas Cahaya</p>
         </div>
@@ -116,6 +130,15 @@ function SensorDashboard() {
                 icon="💡"
                 color="gold"
               />
+              <div className="light-status-card">
+                <div className="status-icon">{getLightStatus(latestData.cahaya).icon}</div>
+                <div className="status-text">
+                  <h3>Status Cahaya</h3>
+                  <p className={`status-${getLightStatus(latestData.cahaya).color}`}>
+                    {getLightStatus(latestData.cahaya).status}
+                  </p>
+                </div>
+              </div>
               <div className="status-info">
                 <p><strong>Waktu Update:</strong> {new Date(latestData.updatedAt).toLocaleString('id-ID')}</p>
                 <p><strong>Total Data:</strong> {allData.length} record</p>
