@@ -1,30 +1,26 @@
-const SensorLogs = require("../models/sensorlog");
+const { SensorLog } = require("../models");
+console.log("🔥 IOT CONTROLLER AKTIF & DIPAKAI");
 
-// POST /api/sensor
 exports.createSensorLog = async (req, res) => {
-  try {
-    const { cahaya } = req.body;
+  const { cahaya } = req.body;
 
-    if (cahaya === undefined) {
-      return res.status(400).json({ message: "Data cahaya wajib dikirim" });
-    }
+  const AMBANG = 2000;
 
-    const data = await SensorLogs.create({ cahaya });
+  const kondisi = cahaya > AMBANG ? "TERANG" : "GELAP";
+  const status_lampu = cahaya > AMBANG ? "OFF" : "ON";
 
-    res.status(201).json({
-      message: "Data cahaya berhasil disimpan",
-      data
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Server error" });
-  }
+  const data = await SensorLog.create({
+    cahaya,
+    kondisi,
+    status_lampu
+  });
+
+  res.status(201).json({ data });
 };
 
-// GET /api/sensor
 exports.getAllSensorLogs = async (req, res) => {
   try {
-    const data = await SensorLogs.findAll({
+    const data = await SensorLog.findAll({
       order: [["createdAt", "DESC"]]
     });
     res.json(data);
@@ -33,10 +29,9 @@ exports.getAllSensorLogs = async (req, res) => {
   }
 };
 
-// GET /api/sensor/latest
 exports.getLatestSensorLog = async (req, res) => {
   try {
-    const data = await SensorLogs.findOne({
+    const data = await SensorLog.findOne({
       order: [["createdAt", "DESC"]]
     });
     res.json(data);
