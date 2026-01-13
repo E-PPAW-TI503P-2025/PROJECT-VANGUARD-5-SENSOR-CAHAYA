@@ -29,7 +29,7 @@ function SensorHistory({ data }) {
   return (
     <div className="history-container">
       <h2>📋 Riwayat Data Sensor</h2>
-      
+
       <div className="history-table-wrapper">
         <table className="history-table">
           <thead>
@@ -37,41 +37,38 @@ function SensorHistory({ data }) {
               <th>No</th>
               <th>ID Sensor</th>
               <th>Intensitas Cahaya</th>
+              <th>Kondisi</th>
+              <th>Status Lampu</th>
               <th>Tanggal & Waktu</th>
-              <th>Status</th>
             </tr>
           </thead>
           <tbody>
             {displayData.map((item, index) => {
               const rowNumber = startIndex + index + 1;
-              const isHighLight = item.cahaya > Math.max(...data.map(d => d.cahaya)) * 0.8;
-              const isLowLight = item.cahaya < Math.max(...data.map(d => d.cahaya)) * 0.2;
-              
-              let statusClass = '';
-              let statusText = 'Normal';
-              
-              if (isHighLight) {
-                statusClass = 'status-high';
-                statusText = 'Cahaya Terang';
-              } else if (isLowLight) {
-                statusClass = 'status-low';
-                statusText = 'Cahaya Redup';
-              }
+
+              // Use backend data for kondisi
+              const kondisiClass = item.kondisi === 'TERANG' ? 'status-terang' : 'status-gelap';
+              const lampClass = item.status_lampu === 'ON' ? 'lamp-on' : 'lamp-off';
 
               return (
-                <tr key={item.idSensorLogs} className={statusClass}>
+                <tr key={item.idSensorLogs}>
                   <td className="table-center">{rowNumber}</td>
                   <td className="table-center">{item.idSensorLogs}</td>
                   <td className="table-value">
                     <strong>{item.cahaya}</strong> lux
                   </td>
-                  <td className="table-date">
-                    {new Date(item.createdAt).toLocaleString('id-ID')}
+                  <td className="table-center">
+                    <span className={`badge ${kondisiClass}`}>
+                      {item.kondisi === 'TERANG' ? '☀️' : '🌙'} {item.kondisi}
+                    </span>
                   </td>
                   <td className="table-center">
-                    <span className={`badge ${statusClass}`}>
-                      {statusText}
+                    <span className={`badge ${lampClass}`}>
+                      {item.status_lampu === 'ON' ? '💡' : '⚫'} {item.status_lampu}
                     </span>
+                  </td>
+                  <td className="table-date">
+                    {new Date(item.createdAt).toLocaleString('id-ID')}
                   </td>
                 </tr>
               );
@@ -82,19 +79,19 @@ function SensorHistory({ data }) {
 
       {/* Pagination */}
       <div className="pagination">
-        <button 
+        <button
           className="pagination-btn"
           onClick={handlePrevPage}
           disabled={currentPage === 1}
         >
           ← Sebelumnya
         </button>
-        
+
         <div className="pagination-info">
           Halaman {currentPage} dari {totalPages} | Total: {data.length} data
         </div>
-        
-        <button 
+
+        <button
           className="pagination-btn"
           onClick={handleNextPage}
           disabled={currentPage === totalPages}

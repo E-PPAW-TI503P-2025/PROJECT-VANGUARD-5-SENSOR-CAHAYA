@@ -6,6 +6,9 @@ function SensorCard({ label, value, unit, icon = '📊', color = 'blue' }) {
     if (color === 'gold') return 'card-gold';
     if (color === 'red') return 'card-red';
     if (color === 'green') return 'card-green';
+    if (color === 'orange') return 'card-orange';
+    if (color === 'purple') return 'card-purple';
+    if (color === 'gray') return 'card-gray';
     return 'card-blue';
   };
 

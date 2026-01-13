@@ -14,7 +14,7 @@ function SensorDashboard() {
   // Fetch data terbaru
   const fetchLatestData = async () => {
     try {
-      const response = await fetch('http://localhost:3001/api/sensor/latest');
+      const response = await fetch('http://localhost:3000/api/sensor/latest');
       const data = await response.json();
       setLatestData(data);
     } catch (err) {
@@ -26,7 +26,7 @@ function SensorDashboard() {
   // Fetch semua data
   const fetchAllData = async () => {
     try {
-      const response = await fetch('http://localhost:3001/api/sensor');
+      const response = await fetch('http://localhost:3000/api/sensor');
       const data = await response.json();
       setAllData(data);
       setLoading(false);
@@ -76,14 +76,14 @@ function SensorDashboard() {
           <p>Sistem Real-time Monitoring Intensitas Cahaya</p>
         </div>
         <div className="header-actions">
-          <button 
+          <button
             className="btn btn-refresh"
             onClick={handleRefresh}
             disabled={loading}
           >
             🔄 Refresh
           </button>
-          <select 
+          <select
             className="interval-select"
             value={refreshInterval}
             onChange={(e) => setRefreshInterval(parseInt(e.target.value))}
@@ -109,16 +109,31 @@ function SensorDashboard() {
           <div className="status-card">
             <h2>Status Sensor Terkini</h2>
             <div className="status-content">
-              <SensorCard 
+              <SensorCard
                 label="Intensitas Cahaya"
                 value={latestData.cahaya}
                 unit="lux"
                 icon="💡"
                 color="gold"
               />
+              <SensorCard
+                label="Kondisi Cahaya"
+                value={latestData.kondisi}
+                unit=""
+                icon={latestData.kondisi === 'TERANG' ? '☀️' : '🌙'}
+                color={latestData.kondisi === 'TERANG' ? 'orange' : 'purple'}
+              />
+              <SensorCard
+                label="Status Lampu"
+                value={latestData.status_lampu}
+                unit=""
+                icon={latestData.status_lampu === 'ON' ? '💡' : '⚫'}
+                color={latestData.status_lampu === 'ON' ? 'green' : 'gray'}
+              />
               <div className="status-info">
                 <p><strong>Waktu Update:</strong> {new Date(latestData.updatedAt).toLocaleString('id-ID')}</p>
                 <p><strong>Total Data:</strong> {allData.length} record</p>
+                <p><strong>Ambang Batas:</strong> 2000 lux</p>
               </div>
             </div>
           </div>
