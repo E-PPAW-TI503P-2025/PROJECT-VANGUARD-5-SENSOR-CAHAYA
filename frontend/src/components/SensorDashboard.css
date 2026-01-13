@@ -259,3 +259,60 @@
     font-size: 24px;
   }
 }
+
+/* ============ Back Button ============ */
+.btn-back {
+  background: #6c757d;
+  color: white;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.btn-back:hover {
+  background: #5a6268;
+  transform: translateY(-1px);
+}
+
+/* ============ Light Status Card ============ */
+.light-status-card {
+  display: flex;
+  align-items: center;
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 10px;
+  margin: 0 20px;
+  border-left: 5px solid #667eea;
+}
+
+.status-icon {
+  font-size: 3rem;
+  margin-right: 15px;
+}
+
+.status-text h3 {
+  margin: 0 0 5px 0;
+  color: #2c3e50;
+  font-size: 16px;
+}
+
+.status-text p {
+  margin: 0;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.status-red {
+  color: #e74c3c;
+}
+
+.status-orange {
+  color: #e67e22;
+}
+
+.status-yellow {
+  color: #f39c12;
+}
+
+.status-gold {
+  color: #f1c40f;
+}
