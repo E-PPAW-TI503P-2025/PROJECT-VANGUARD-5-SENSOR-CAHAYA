@@ -1,6 +1,6 @@
-const SensorLogs = require("../models/sensorlog");
+const { SensorLog } = require("../models");
+console.log("🔥 IOT CONTROLLER AKTIF & DIPAKAI");
 
-// POST /api/sensor
 exports.createSensorLog = async (req, res) => {
   try {
     const { cahaya } = req.body;
@@ -24,7 +24,7 @@ exports.createSensorLog = async (req, res) => {
 // GET /api/sensor
 exports.getAllSensorLogs = async (req, res) => {
   try {
-    const data = await SensorLogs.findAll({
+    const data = await SensorLog.findAll({
       order: [["createdAt", "DESC"]]
     });
     res.json(data);
@@ -33,10 +33,9 @@ exports.getAllSensorLogs = async (req, res) => {
   }
 };
 
-// GET /api/sensor/latest
 exports.getLatestSensorLog = async (req, res) => {
   try {
-    const data = await SensorLogs.findOne({
+    const data = await SensorLog.findOne({
       order: [["createdAt", "DESC"]]
     });
     res.json(data);

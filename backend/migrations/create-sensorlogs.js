@@ -2,7 +2,7 @@
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("SensorLogs", {
+    await queryInterface.createTable("sensorlogs", {
       idSensorLogs: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -12,6 +12,11 @@ module.exports = {
       cahaya: {
         type: Sequelize.INTEGER,
         allowNull: false
+      },
+      status: {
+        type: Sequelize.STRING(20),
+        allowNull: false,
+        defaultValue: 'terang'
       },
       createdAt: {
         allowNull: false,
@@ -29,6 +34,6 @@ module.exports = {
   },
 
   async down(queryInterface) {
-    await queryInterface.dropTable("SensorLogs");
+    await queryInterface.dropTable("sensorlogs");
   }
 };

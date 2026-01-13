@@ -14,7 +14,7 @@ function SensorDashboard({ onBackToLanding }) {
   // Fetch data terbaru
   const fetchLatestData = async () => {
     try {
-      const response = await fetch('http://localhost:3001/api/sensor/latest');
+      const response = await fetch('http://localhost:3000/api/sensor/latest');
       const data = await response.json();
       setLatestData(data);
     } catch (err) {
@@ -26,7 +26,7 @@ function SensorDashboard({ onBackToLanding }) {
   // Fetch semua data
   const fetchAllData = async () => {
     try {
-      const response = await fetch('http://localhost:3001/api/sensor');
+      const response = await fetch('http://localhost:3000/api/sensor');
       const data = await response.json();
       setAllData(data);
       setLoading(false);
@@ -90,14 +90,14 @@ function SensorDashboard({ onBackToLanding }) {
           <p>Sistem Real-time Monitoring Intensitas Cahaya</p>
         </div>
         <div className="header-actions">
-          <button 
+          <button
             className="btn btn-refresh"
             onClick={handleRefresh}
             disabled={loading}
           >
             🔄 Refresh
           </button>
-          <select 
+          <select
             className="interval-select"
             value={refreshInterval}
             onChange={(e) => setRefreshInterval(parseInt(e.target.value))}
@@ -123,10 +123,10 @@ function SensorDashboard({ onBackToLanding }) {
           <div className="status-card">
             <h2>Status Sensor Terkini</h2>
             <div className="status-content">
-              <SensorCard 
+              <SensorCard
                 label="Intensitas Cahaya"
                 value={latestData.cahaya}
-                unit="lux"
+                unit="ADC"
                 icon="💡"
                 color="gold"
               />
@@ -142,6 +142,7 @@ function SensorDashboard({ onBackToLanding }) {
               <div className="status-info">
                 <p><strong>Waktu Update:</strong> {new Date(latestData.updatedAt).toLocaleString('id-ID')}</p>
                 <p><strong>Total Data:</strong> {allData.length} record</p>
+                <p><strong>Ambang Batas:</strong> 2000 lux</p>
               </div>
             </div>
           </div>
@@ -166,19 +167,19 @@ function SensorDashboard({ onBackToLanding }) {
             <div className="stat-box">
               <h3>Nilai Tertinggi</h3>
               <p className="stat-value">
-                {Math.max(...allData.map(d => d.cahaya))} lux
+                {Math.max(...allData.map(d => d.cahaya))} ADC
               </p>
             </div>
             <div className="stat-box">
               <h3>Nilai Terendah</h3>
               <p className="stat-value">
-                {Math.min(...allData.map(d => d.cahaya))} lux
+                {Math.min(...allData.map(d => d.cahaya))} ADC
               </p>
             </div>
             <div className="stat-box">
               <h3>Rata-rata</h3>
               <p className="stat-value">
-                {(allData.reduce((sum, d) => sum + d.cahaya, 0) / allData.length).toFixed(2)} lux
+                {(allData.reduce((sum, d) => sum + d.cahaya, 0) / allData.length).toFixed(2)} ADC
               </p>
             </div>
             <div className="stat-box">
