@@ -13,6 +13,11 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false
       },
+      status: {
+        type: Sequelize.STRING(20),
+        allowNull: false,
+        defaultValue: 'terang'
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

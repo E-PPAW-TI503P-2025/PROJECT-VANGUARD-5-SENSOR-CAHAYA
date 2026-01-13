@@ -46,16 +46,23 @@ function SensorHistory({ data }) {
             {displayData.map((item, index) => {
               const rowNumber = startIndex + index + 1;
 
+<<<<<<< Updated upstream
               // Use backend data for kondisi
               const kondisiClass = item.kondisi === 'TERANG' ? 'status-terang' : 'status-gelap';
               const lampClass = item.status_lampu === 'ON' ? 'lamp-on' : 'lamp-off';
+=======
+              // Gunakan status dari database
+              const statusClass = item.status === 'gelap' ? 'status-low' : 'status-high';
+              const statusText = item.status === 'gelap' ? 'Gelap' : 'Terang';
+              const statusIcon = item.status === 'gelap' ? '🌑' : '☀️';
+>>>>>>> Stashed changes
 
               return (
                 <tr key={item.idSensorLogs}>
                   <td className="table-center">{rowNumber}</td>
                   <td className="table-center">{item.idSensorLogs}</td>
                   <td className="table-value">
-                    <strong>{item.cahaya}</strong> lux
+                    <strong>{item.cahaya}</strong> ADC
                   </td>
                   <td className="table-center">
                     <span className={`badge ${kondisiClass}`}>
@@ -63,8 +70,13 @@ function SensorHistory({ data }) {
                     </span>
                   </td>
                   <td className="table-center">
+<<<<<<< Updated upstream
                     <span className={`badge ${lampClass}`}>
                       {item.status_lampu === 'ON' ? '💡' : '⚫'} {item.status_lampu}
+=======
+                    <span className={`badge ${statusClass}`}>
+                      {statusIcon} {statusText}
+>>>>>>> Stashed changes
                     </span>
                   </td>
                   <td className="table-date">

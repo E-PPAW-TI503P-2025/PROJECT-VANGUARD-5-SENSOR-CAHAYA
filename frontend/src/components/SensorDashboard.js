@@ -59,6 +59,14 @@ function SensorDashboard() {
     fetchAllData();
   };
 
+  // Fungsi untuk menentukan status cahaya
+  const getLightStatus = (lux) => {
+    if (lux < 100) return { status: 'Sangat Gelap', color: 'red', icon: '🌑' };
+    if (lux < 500) return { status: 'Gelap', color: 'orange', icon: '🌙' };
+    if (lux < 1000) return { status: 'Terang', color: 'yellow', icon: '☀️' };
+    return { status: 'Sangat Terang', color: 'gold', icon: '🔆' };
+  };
+
   if (loading && !latestData) {
     return (
       <div className="dashboard-container">
@@ -72,6 +80,12 @@ function SensorDashboard() {
       {/* Header */}
       <div className="dashboard-header">
         <div>
+          <button 
+            className="btn btn-back"
+            onClick={onBackToLanding}
+          >
+            ← Kembali ke Beranda
+          </button>
           <h1>📊 Dashboard Monitoring Sensor Cahaya</h1>
           <p>Sistem Real-time Monitoring Intensitas Cahaya</p>
         </div>
@@ -112,24 +126,19 @@ function SensorDashboard() {
               <SensorCard
                 label="Intensitas Cahaya"
                 value={latestData.cahaya}
-                unit="lux"
+                unit="ADC"
                 icon="💡"
                 color="gold"
               />
-              <SensorCard
-                label="Kondisi Cahaya"
-                value={latestData.kondisi}
-                unit=""
-                icon={latestData.kondisi === 'TERANG' ? '☀️' : '🌙'}
-                color={latestData.kondisi === 'TERANG' ? 'orange' : 'purple'}
-              />
-              <SensorCard
-                label="Status Lampu"
-                value={latestData.status_lampu}
-                unit=""
-                icon={latestData.status_lampu === 'ON' ? '💡' : '⚫'}
-                color={latestData.status_lampu === 'ON' ? 'green' : 'gray'}
-              />
+              <div className="light-status-card">
+                <div className="status-icon">{getLightStatus(latestData.cahaya).icon}</div>
+                <div className="status-text">
+                  <h3>Status Cahaya</h3>
+                  <p className={`status-${getLightStatus(latestData.cahaya).color}`}>
+                    {getLightStatus(latestData.cahaya).status}
+                  </p>
+                </div>
+              </div>
               <div className="status-info">
                 <p><strong>Waktu Update:</strong> {new Date(latestData.updatedAt).toLocaleString('id-ID')}</p>
                 <p><strong>Total Data:</strong> {allData.length} record</p>
@@ -158,19 +167,19 @@ function SensorDashboard() {
             <div className="stat-box">
               <h3>Nilai Tertinggi</h3>
               <p className="stat-value">
-                {Math.max(...allData.map(d => d.cahaya))} lux
+                {Math.max(...allData.map(d => d.cahaya))} ADC
               </p>
             </div>
             <div className="stat-box">
               <h3>Nilai Terendah</h3>
               <p className="stat-value">
-                {Math.min(...allData.map(d => d.cahaya))} lux
+                {Math.min(...allData.map(d => d.cahaya))} ADC
               </p>
             </div>
             <div className="stat-box">
               <h3>Rata-rata</h3>
               <p className="stat-value">
-                {(allData.reduce((sum, d) => sum + d.cahaya, 0) / allData.length).toFixed(2)} lux
+                {(allData.reduce((sum, d) => sum + d.cahaya, 0) / allData.length).toFixed(2)} ADC
               </p>
             </div>
             <div className="stat-box">

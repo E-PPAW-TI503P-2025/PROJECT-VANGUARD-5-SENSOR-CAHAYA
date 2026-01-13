@@ -8,7 +8,7 @@ function SensorChart({ data }) {
 
   // Ambil 20 data terakhir untuk chart
   const chartData = data.slice(0, 20).reverse();
-  
+
   // Cari max dan min untuk scaling
   const maxValue = Math.max(...chartData.map(d => d.cahaya));
   const minValue = Math.min(...chartData.map(d => d.cahaya));
@@ -20,28 +20,23 @@ function SensorChart({ data }) {
     return ((value - minValue) / range) * (chartHeight - padding);
   };
 
-  const getChartX = (index) => {
-    const chartWidth = 100 - (padding * 2) / 800;
-    return (index / (chartData.length - 1 || 1)) * (100 - (padding * 2) / 8);
-  };
-
   return (
     <div className="chart-container">
       <h2>📉 Grafik Intensitas Cahaya (20 Data Terakhir)</h2>
-      
+
       <div className="chart-wrapper">
-        <svg 
-          className="chart-svg" 
+        <svg
+          className="chart-svg"
           viewBox="0 0 800 350"
           preserveAspectRatio="xMidYMid meet"
         >
           {/* Grid */}
           <defs>
             <pattern id="grid" width="80" height="35" patternUnits="userSpaceOnUse">
-              <path d="M 80 0 L 0 0 0 35" fill="none" stroke="#f0f0f0" strokeWidth="1"/>
+              <path d="M 80 0 L 0 0 0 35" fill="none" stroke="#f0f0f0" strokeWidth="1" />
             </pattern>
           </defs>
-          
+
           <rect width="800" height="350" fill="url(#grid)" />
 
           {/* Axes */}
@@ -50,7 +45,7 @@ function SensorChart({ data }) {
 
           {/* Y-axis labels */}
           <text x="35" y="325" textAnchor="end" fontSize="12" fill="#666">0</text>
-          <text x="35" y="185" textAnchor="end" fontSize="12" fill="#666">{(minValue + range/2).toFixed(0)}</text>
+          <text x="35" y="185" textAnchor="end" fontSize="12" fill="#666">{(minValue + range / 2).toFixed(0)}</text>
           <text x="35" y="25" textAnchor="end" fontSize="12" fill="#666">{maxValue.toFixed(0)}</text>
 
           {/* Bars */}
@@ -68,7 +63,7 @@ function SensorChart({ data }) {
                   opacity="0.7"
                   className="chart-bar"
                 >
-                  <title>{item.cahaya} lux</title>
+                  <title>{item.cahaya} ADC</title>
                 </rect>
                 <text
                   x={x}
